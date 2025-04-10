@@ -1,6 +1,8 @@
 from plotter import * #add_circle, BigCircle
-
+from dxf import *
 def menu(fig):
+    doc, msp = create_doc()
+
     print("1. Square\n2. Circle")
     choice = int(input())
 
@@ -28,15 +30,16 @@ def menu(fig):
     match choice:
         case 1:
             print("Square")
-            BigSquare(fig, diameter, mh_diameter/2, mh_spacing)
-            holePattern(fig,h_diameter/2,h_spacing,h_rows)
-            ActiveSquare(fig,active)
+            BigSquare(fig, msp, diameter, mh_diameter/2, mh_spacing)
+            holePattern(fig, msp, h_diameter/2,h_spacing,h_rows)
+            ActiveSquare(fig, msp, active)
         case 2:
             print("Circle")
-            BigCircle(fig, diameter/2, mh_diameter/2, mh_spacing)
-            holePattern(fig, h_diameter / 2, h_spacing, h_rows)
-            ActiveCircle(fig, active/2)
+            BigCircle(fig, msp, diameter/2, mh_diameter/2, mh_spacing)
+            holePattern(fig, msp, h_diameter / 2, h_spacing, h_rows)
+            ActiveCircle(fig, msp, active/2)
         case _:
-            add_circle(fig,(0,0), h_diameter/2,'red')
-            mounting_holes(fig,mh_diameter/2,'blue', mh_spacing)
+            add_circle(fig, msp, (0,0), h_diameter/2,'red')
+            mounting_holes(fig, msp, mh_diameter/2,'blue', mh_spacing)
 
+    doc.saveas('Astrocent_1.dxf')

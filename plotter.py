@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import math
+from dxf import *
 
 def plot_basis(size, title):
     # Plot to see what's happening
@@ -25,24 +26,26 @@ def plot_basis(size, title):
 def show_plot():
     plt.show()
 
-def add_circle(fig, center, radius, color):
+def add_circle(fig,msp, center, radius, color,layer):
     circle = plt.Circle(center, radius, fill=False, linewidth=1, edgecolor=color)
     fig.gca().add_artist(circle)
+    dxf_circle(msp,center,radius,layer)
 
-def mounting_holes_circle(fig, radius, spacing):
+def mounting_holes_circle(fig,msp, radius, spacing):
     for i in range(0,3):
-        add_circle(fig, (math.cos(2*i*math.pi/3+math.pi/2)*spacing/2, math.sin(2*i*math.pi/3+math.pi/2)*spacing/2), radius, 'blue')
+        add_circle(fig, msp,(math.cos(2*i*math.pi/3+math.pi/2)*spacing/2, math.sin(2*i*math.pi/3+math.pi/2)*spacing/2), radius, 'blue',"Hole")
+
     #add_circle(fig, (-spacing/2, 0), radius, 'blue')
     #add_circle(fig, (spacing / 2, 0), radius, 'blue')
 
-def BigCircle(fig, radius, mh_radius, spacing):
-    add_circle(fig, (0, 0), radius, 'red')
-    mounting_holes_circle(fig, mh_radius, spacing)
+def BigCircle(fig,msp, radius, mh_radius, spacing):
+    add_circle(fig, msp,(0, 0), radius, 'red',"Shape")
+    mounting_holes_circle(fig, msp, mh_radius, spacing)
 
-def ActiveCircle(fig,radius):
-    add_circle(fig, (0, 0), radius, 'cyan')
+def ActiveCircle(fig,msp,radius):
+    add_circle(fig, msp,(0, 0), radius, 'cyan', "Active")
 
-def add_square(fig, side, color):
+def add_square(fig,msp, side, color,layer):
     corner = side/2
     line = plt.Line2D([-corner, -corner], [corner, -corner], linestyle='-', color=color)
     fig.gca().add_artist(line)
@@ -52,22 +55,23 @@ def add_square(fig, side, color):
     fig.gca().add_artist(line)
     line = plt.Line2D([-corner, corner], [-corner, -corner], linestyle='-', color=color)
     fig.gca().add_artist(line)
+    dxf_square(msp,corner,layer)
 
-def mounting_holes_square(fig, radius, spacing):
-    add_circle(fig, (-spacing/2, -spacing/2), radius, 'blue')
-    add_circle(fig, (-spacing / 2, spacing/2), radius, 'blue')
-    add_circle(fig, (spacing / 2, spacing / 2), radius, 'blue')
-    add_circle(fig, (spacing / 2, -spacing / 2), radius, 'blue')
+def mounting_holes_square(fig, msp, radius, spacing):
+    add_circle(fig, msp,(-spacing/2, -spacing/2), radius, 'blue', "Hole")
+    add_circle(fig, msp,(-spacing / 2, spacing/2), radius, 'blue',"Hole")
+    add_circle(fig, msp,(spacing / 2, spacing / 2), radius, 'blue', "Hole")
+    add_circle(fig, msp,(spacing / 2, -spacing / 2), radius, 'blue',"Hole")
 
-def BigSquare(fig, side, radius, spacing):
-    add_square(fig, side, 'red')
-    mounting_holes_square(fig, radius, spacing)
+def BigSquare(fig, msp, side, radius, spacing):
+    add_square(fig, msp,side, 'red',"Shape")
+    mounting_holes_square(fig,msp, radius, spacing)
 
-def ActiveSquare(fig,side):
-    add_square(fig, side, 'cyan')
+def ActiveSquare(fig,msp, side):
+    add_square(fig, msp, side, 'cyan', "Active")
 
-def holePattern(fig, radius, spacing, rows):
-    add_circle(fig, (0, 0), radius, 'green')
+def holePattern(fig, msp, radius, spacing, rows):
+    add_circle(fig, msp,(0, 0), radius, 'green', "Pattern")
     x = []
     y = []
     for i in range(0, rows):
@@ -75,4 +79,4 @@ def holePattern(fig, radius, spacing, rows):
             x.append(i*spacing*math.cos(j*math.pi/(3*i)))
             y.append(i*spacing*math.sin(j*math.pi/(3*i)))
     for i in range(0, len(x)):
-        add_circle(fig, (x[i], y[i]), radius, 'green')
+        add_circle(fig, msp,(x[i], y[i]), radius, 'green', "Pattern")
