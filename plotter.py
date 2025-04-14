@@ -70,13 +70,40 @@ def BigSquare(fig, msp, side, radius, spacing):
 def ActiveSquare(fig,msp, side):
     add_square(fig, msp, side, 'cyan', "Active")
 
-def holePattern(fig, msp, radius, spacing, rows):
-    add_circle(fig, msp,(0, 0), radius, 'green', "Pattern")
+def holePatternCircle(fig,msp,radius,spacing,active_radius):
+    add_circle(fig, msp, (0, 0), radius, 'green', "Pattern")
     x = []
     y = []
-    for i in range(0, rows):
-        for j in range(0,i*6):
-            x.append(i*spacing*math.cos(j*math.pi/(3*i)))
-            y.append(i*spacing*math.sin(j*math.pi/(3*i)))
+    distance = 0
+    count = 0
+    while (distance + radius) <= active_radius:
+        for j in range(0, count * 6):
+            x.append(count * spacing * math.cos(j * math.pi / (3 * count)))
+            y.append(count * spacing * math.sin(j * math.pi / (3 * count)))
+            distance = math.sqrt(x[j] ** 2 + y[j] ** 2)
+        count += 1
+
     for i in range(0, len(x)):
-        add_circle(fig, msp,(x[i], y[i]), radius, 'green', "Pattern")
+        distance = math.sqrt(x[i] ** 2 + y[i] ** 2)
+        if distance <= active_radius:
+            add_circle(fig, msp,(x[i], y[i]), radius, 'green', "Pattern")
+
+
+def holePatternSquare(fig, msp, radius, spacing, active):
+    add_circle(fig, msp, (0, 0), radius, 'green', "Pattern")
+    x = []
+    y = []
+    distance = 0
+    count = 0
+    while (distance + radius) <= active:
+        for j in range(0, count * 6):
+            x.append(count * spacing * math.cos(j * math.pi / (3 * count)))
+            y.append(count * spacing * math.sin(j * math.pi / (3 * count)))
+            distance = math.sqrt(x[j] ** 2 + y[j] ** 2)
+        count += 1
+
+    for i in range(0, len(x)):
+        distance = math.sqrt(x[i] ** 2 + y[i] ** 2)
+
+        if(math.fabs(x[i]) + radius <= active/2 and math.fabs(y[i]) + radius <= active/2):
+            add_circle(fig, msp, (x[i], y[i]), radius, 'green', "Pattern")

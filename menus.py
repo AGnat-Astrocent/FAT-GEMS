@@ -18,9 +18,6 @@ def menu(fig):
     print("Hole spacing: ")
     h_spacing = int(input())
 
-    print("Hole rows: ")
-    h_rows = int(input())
-
     print("Mounting hole diameter: ")
     mh_diameter = int(input())
 
@@ -31,12 +28,12 @@ def menu(fig):
         case 1:
             print("Square")
             BigSquare(fig, msp, diameter, mh_diameter/2, mh_spacing)
-            holePattern(fig, msp, h_diameter/2,h_spacing,h_rows)
+            holePatternSquare(fig, msp, h_diameter/2,h_spacing,active)
             ActiveSquare(fig, msp, active)
         case 2:
             print("Circle")
             BigCircle(fig, msp, diameter/2, mh_diameter/2, mh_spacing)
-            holePattern(fig, msp, h_diameter / 2, h_spacing, h_rows)
+            holePatternCircle(fig, msp, h_diameter / 2, h_spacing, active/2)
             ActiveCircle(fig, msp, active/2)
         case _:
             add_circle(fig, msp, (0,0), h_diameter/2,'red')
