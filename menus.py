@@ -19,7 +19,7 @@ def menu(fig):
     h_spacing = int(input())
 
     print("Mounting hole diameter: ")
-    mh_diameter = int(input())
+    mh_diameter = float(input())
 
     print("Mounting hole spacing: ")
     mh_spacing = int(input())
@@ -39,4 +39,4 @@ def menu(fig):
             add_circle(fig, msp, (0,0), h_diameter/2,'red')
             mounting_holes(fig, msp, mh_diameter/2,'blue', mh_spacing)
 
-    doc.saveas('Astrocent_1.dxf')
+    doc.saveas('S1.dxf')
