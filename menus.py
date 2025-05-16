@@ -39,4 +39,4 @@ def menu(fig):
             add_circle(fig, msp, (0,0), h_diameter/2,'red')
             mounting_holes(fig, msp, mh_diameter/2,'blue', mh_spacing)
 
-    doc.saveas('S1.dxf')
+    doc.saveas('T1.dxf')

@@ -76,7 +76,7 @@ def holePatternCircle(fig,msp,radius,spacing,active_radius):
     y = []
     distance = 0
     count = 0
-    while (distance + radius) <= active_radius:
+    while (distance) <= active_radius:
         for j in range(0, count * 6):
             x.append(count * spacing * math.cos(j * math.pi / (3 * count)))
             y.append(count * spacing * math.sin(j * math.pi / (3 * count)))
@@ -85,7 +85,7 @@ def holePatternCircle(fig,msp,radius,spacing,active_radius):
 
     for i in range(0, len(x)):
         distance = math.sqrt(x[i] ** 2 + y[i] ** 2)
-        if (distance + radius) <= active_radius:
+        if (distance) <= active_radius:
             add_circle(fig, msp,(x[i], y[i]), radius, 'green', "Pattern")
 
 
